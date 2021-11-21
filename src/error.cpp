@@ -4,15 +4,17 @@ Error::Error(int id, ErrorCode error) : jsonrpc("2.0"), id(id), error(error) {}
 
 Error *from(std::string str) {
   nlohmann::json parsed = nlohmann::json::parse(str);
+  if (parsed["id"] == nullptr)
+    return nullptr;
   Error *err;
 
   try {
     err = new Error(parsed["id"], parsed["error"]);
-  } catch (const nlohmann::detail::type_error) {
-    std::cout << "Incorrect format for converting JSON to Error object"
-              << std::endl;
-    exit(1);
-    // TODO Should send an error code from rpc specifications
+  } catch (nlohmann::json::type_error &e) {
+    if (e.id == 302) {
+      Error *err = new Error(parsed["id"], ErrorCode::Invalid_Json_Conversion);
+      post_json(err->to());
+    }
   }
 
   return err;

@@ -2,6 +2,7 @@
 #define ERROR_H_
 
 #include "../lib/json.hpp"
+#include "utils.hpp"
 #include <iostream>
 
 typedef enum {

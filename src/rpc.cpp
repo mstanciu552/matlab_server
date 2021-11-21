@@ -5,14 +5,16 @@ Request::Request(int id, std::string method, nlohmann::json params)
 
 Request *Request::from(std::string str) {
   nlohmann::json parsed = nlohmann::json::parse(str);
+  if (parsed["id"] == nullptr)
+    return nullptr;
   Request *req;
   try {
     req = new Request(parsed["id"], parsed["method"], parsed["params"]);
-  } catch (const nlohmann::detail::type_error) {
-    std::cout << "Incorrect format for converting JSON to Request object"
-              << std::endl;
-    Error *err = new Error(parsed["id"], ErrorCode::Invalid_Json_Conversion);
-    post_json(err->to());
+  } catch (nlohmann::json::type_error &e) {
+    if (e.id == 302) {
+      Error *err = new Error(parsed["id"], ErrorCode::Invalid_Json_Conversion);
+      post_json(err->to());
+    }
   }
   return req;
 }
@@ -28,14 +30,16 @@ Response::Response(int id, nlohmann::json result)
 
 Response *Response::from(std::string str) {
   nlohmann::json parsed = nlohmann::json::parse(str);
+  if (parsed["id"] == nullptr)
+    return nullptr;
   Response *req;
   try {
     req = new Response(parsed["id"], parsed["result"]);
-  } catch (const nlohmann::detail::type_error) {
-    std::cout << "Incorrect format for converting JSON to Response object"
-              << std::endl;
-    Error *err = new Error(parsed["id"], ErrorCode::Invalid_Json_Conversion);
-    post_json(err->to());
+  } catch (nlohmann::json::type_error &e) {
+    if (e.id == 302) {
+      Error *err = new Error(parsed["id"], ErrorCode::Invalid_Json_Conversion);
+      post_json(err->to());
+    }
   }
   return req;
 }

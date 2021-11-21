@@ -7,6 +7,5 @@ int main() {
   std::string json_string = "{\"jsonrpc\": \"2.0\", \"id\": 1, \"method\": "
                             "\"textDocument/didOpen\", \"params\": \"\"}";
 
-  methods_vector[0]->value();
   return 0;
 }
