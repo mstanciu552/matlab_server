@@ -1,12 +1,20 @@
 #include "rpc.hpp"
 
 Request::Request(int id, std::string method, nlohmann::json params)
-    : id(id), method(method), params(params) {}
+    : jsonrpc("2.0"), id(id), method(method), params(params) {}
 
 Request *Request::from(std::string str) {
   nlohmann::json parsed = nlohmann::json::parse(str);
-  Request *ret = (Request *)&parsed;
-  return ret;
+  Request *req;
+  try {
+    req = new Request(parsed["id"], parsed["method"], parsed["params"]);
+  } catch (const nlohmann::detail::type_error) {
+    std::cout << "Incorrect format for converting JSON to Request object"
+              << std::endl;
+    Error *err = new Error(parsed["id"], ErrorCode::Invalid_Json_Conversion);
+    post_json(err->to());
+  }
+  return req;
 }
 
 nlohmann::json Request::to() {
@@ -15,10 +23,21 @@ nlohmann::json Request::to() {
   return jsonified;
 }
 
+Response::Response(int id, nlohmann::json result)
+    : jsonrpc("2.0"), id(id), result(result) {}
+
 Response *Response::from(std::string str) {
-  auto parsed = nlohmann::json::parse(str);
-  auto ret = (Response *)&parsed;
-  return ret;
+  nlohmann::json parsed = nlohmann::json::parse(str);
+  Response *req;
+  try {
+    req = new Response(parsed["id"], parsed["result"]);
+  } catch (const nlohmann::detail::type_error) {
+    std::cout << "Incorrect format for converting JSON to Response object"
+              << std::endl;
+    Error *err = new Error(parsed["id"], ErrorCode::Invalid_Json_Conversion);
+    post_json(err->to());
+  }
+  return req;
 }
 
 nlohmann::json Response::to() {

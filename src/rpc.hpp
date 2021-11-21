@@ -2,6 +2,8 @@
 #define RPC_H_
 
 #include "../lib/json.hpp"
+#include "error.hpp"
+#include "utils.hpp"
 #include <iostream>
 #include <vector>
 
@@ -27,7 +29,7 @@ private:
   nlohmann::json result;
 
 public:
-  Response(int, void *);
+  Response(int, nlohmann::json);
   void print();
   static Response *from(std::string);
   nlohmann::json to();
