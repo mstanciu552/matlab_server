@@ -5,8 +5,6 @@
 #include <iostream>
 #include <vector>
 
-std::vector<std::string> split(std::string, char);
-
 nlohmann::json get_json();
 void post_json(nlohmann::json);
 

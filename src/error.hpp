@@ -16,8 +16,8 @@ typedef enum {
 
 class Error {
 private:
-  int id;
   std::string jsonrpc;
+  int id;
   ErrorCode error;
 
 public:
