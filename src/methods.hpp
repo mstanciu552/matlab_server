@@ -1,6 +1,7 @@
 #ifndef METHODS_H_
 #define METHODS_H_
 
+#include "../lib/json.hpp"
 #include <functional>
 #include <iostream>
 #include <vector>
@@ -23,6 +24,9 @@ void did_open_cb();
 }
 std::vector<table *> init_methods();
 void add_methods(std::string, std::function<void()>);
+namespace input {
+void handle_input(nlohmann::json);
+}
 } // namespace methods
 
 #endif
