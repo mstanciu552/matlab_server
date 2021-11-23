@@ -1,29 +1,29 @@
 #include "methods.hpp"
 
-std::vector<struct Map<std::string, std::function<void()>> *>
-    methods_vector; // Vector of pointers to map
-
-void methods::add_methods(std::string name, std::function<void()> callback) {
-  struct Map<std::string, std::function<void()>> *element =
-      new struct Map<std::string, std::function<void()>>(name, callback);
-
-  methods_vector.push_back(element);
+Method::Method(State *state) : state(state) {
+  state->set_methods(init_methods());
 }
 
-std::vector<table *> methods::init_methods(void) {
-  add_methods("textDocument/didOpen", methods::define::did_open_cb);
-  return methods_vector;
+void Method::add_methods(std::string name, void (*callback)(nlohmann::json)) {
+  struct map *element = new struct map(name, callback);
+
+  std::cout << "add m " << name << std::endl << callback << std::endl;
+  state->get_methods().push_back(element);
 }
 
-void methods::input::handle_input(nlohmann::json input) {
-  if (input["method"] == nullptr)
-    return;
-  for (auto method : methods_vector) {
-    if (method->key == input["method"]) {
-      method->value();
-      break;
-    }
+std::vector<struct map *> Method::init_methods() {
+  std::cout << "init_methods" << std::endl;
+  add_methods("textDocument/didOpen", &did_open_cb);
+  return state->get_methods();
+}
+
+void Method::did_open_cb(nlohmann::json json) {
+  Error *err;
+  if (json["params"] == nullptr || json["params"]["textDocument"] == nullptr) {
+    err = new Error(json["id"], ErrorCode::Invalid_Params);
+    post_json(err->to());
   }
+  free(err);
+  // TODO Add to global state
+  std::cout << "didOpen" << std::endl;
 }
-
-void methods::define::did_open_cb() { std::cout << "Hello world!"; }

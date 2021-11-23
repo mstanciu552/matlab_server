@@ -2,31 +2,24 @@
 #define METHODS_H_
 
 #include "../lib/json.hpp"
-#include <functional>
+#include "error.hpp"
+#include "state.hpp"
 #include <iostream>
 #include <vector>
 
-#define CB(func)                                                               \
-  if (func == 1)                                                               \
-    return 1;
+class Method {
+private:
+  State *state;
+  static void did_open_cb(nlohmann::json params);
+  static void did_close_cb(nlohmann::json params);
+  static void did_change_cb(nlohmann::json params);
+  static void did_save_cb(nlohmann::json params);
 
-template <typename T, typename F> struct Map {
-  T key;
-  F value;
-  Map(T key, F value) : key(key), value(value) {}
+public:
+  Method(State *);
+  std::vector<struct map *> init_methods();
+  void add_methods(std::string, void (*callback)(nlohmann::json));
+  void handle_input(nlohmann::json);
 };
-
-typedef struct Map<std::string, std::function<void()>> table;
-
-namespace methods {
-namespace define {
-void did_open_cb();
-}
-std::vector<table *> init_methods();
-void add_methods(std::string, std::function<void()>);
-namespace input {
-void handle_input(nlohmann::json);
-}
-} // namespace methods
 
 #endif
