@@ -11,12 +11,9 @@ void State::loop() {
 }
 
 bool State::handle_input(nlohmann::json input) {
-  if (input["method"] == nullptr) {
-    std::cout << "method problem" << std::endl;
+  if (input["method"] == nullptr)
     return false;
-  }
   for (struct map *method : methods_vector) {
-    std::cout << method << std::endl;
     if (method->key == input["method"]) {
       method->value(input);
       break;

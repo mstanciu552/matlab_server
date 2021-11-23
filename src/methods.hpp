@@ -4,6 +4,7 @@
 #include "../lib/json.hpp"
 #include "error.hpp"
 #include "state.hpp"
+#include <functional>
 #include <iostream>
 #include <vector>
 
@@ -18,7 +19,7 @@ private:
 public:
   Method(State *);
   std::vector<struct map *> init_methods();
-  void add_methods(std::string, void (*callback)(nlohmann::json));
+  void add_methods(std::string, std::function<void(nlohmann::json)>);
   void handle_input(nlohmann::json);
 };
 

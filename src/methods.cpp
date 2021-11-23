@@ -4,10 +4,10 @@ Method::Method(State *state) : state(state) {
   state->set_methods(init_methods());
 }
 
-void Method::add_methods(std::string name, void (*callback)(nlohmann::json)) {
+void Method::add_methods(std::string name,
+                         std::function<void(nlohmann::json)> callback) {
   struct map *element = new struct map(name, callback);
 
-  std::cout << "add m " << name << std::endl << callback << std::endl;
   state->get_methods().push_back(element);
 }
 

@@ -3,6 +3,7 @@
 
 #include "../lib/json.hpp"
 #include "utils.hpp"
+#include <functional>
 #include <iostream>
 
 struct textDocument {
@@ -12,9 +13,9 @@ struct textDocument {
 
 struct map {
   std::string key;
-  void (*value)(nlohmann::json);
+  std::function<void(nlohmann::json)> value;
 
-  map(std::string key, void (*value)(nlohmann::json))
+  map(std::string key, std::function<void(nlohmann::json)> value)
       : key(key), value(value) {}
 };
 
