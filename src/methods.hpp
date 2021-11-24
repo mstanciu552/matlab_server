@@ -11,15 +11,11 @@
 class Method {
 private:
   State *state;
-  static void did_open_cb(nlohmann::json params);
-  static void did_close_cb(nlohmann::json params);
-  static void did_change_cb(nlohmann::json params);
-  static void did_save_cb(nlohmann::json params);
 
 public:
   Method(State *);
   std::vector<struct map *> init_methods();
-  void add_methods(std::string, std::function<void(nlohmann::json)>);
+  void add_methods(std::string, std::function<void(nlohmann::json, State *)>);
   void handle_input(nlohmann::json);
 };
 

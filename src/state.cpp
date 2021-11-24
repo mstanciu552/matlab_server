@@ -15,7 +15,7 @@ bool State::handle_input(nlohmann::json input) {
     return false;
   for (struct map *method : methods_vector) {
     if (method->key == input["method"]) {
-      method->value(input);
+      method->value(input, this);
       break;
     }
   }

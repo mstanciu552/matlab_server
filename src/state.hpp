@@ -11,14 +11,6 @@ struct textDocument {
   std::string textDocument;
 };
 
-struct map {
-  std::string key;
-  std::function<void(nlohmann::json)> value;
-
-  map(std::string key, std::function<void(nlohmann::json)> value)
-      : key(key), value(value) {}
-};
-
 class State {
 private:
   struct textDocument textDocument;
@@ -33,6 +25,14 @@ public:
   }
   bool handle_input(nlohmann::json);
   void new_method(struct map *);
+};
+
+struct map {
+  std::string key;
+  std::function<void(nlohmann::json, State *)> value;
+
+  map(std::string key, std::function<void(nlohmann::json, State *)> value)
+      : key(key), value(value) {}
 };
 
 #endif

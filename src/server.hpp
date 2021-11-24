@@ -8,6 +8,11 @@ class Server {
 private:
   State *state;
   Method *methods;
+  static void did_open_cb(nlohmann::json, State *);
+  static void did_close_cb(nlohmann::json, State *);
+  static void did_change_cb(nlohmann::json, State *);
+  static void did_save_cb(nlohmann::json, State *);
+  void init_methods();
 
 public:
   Server();
