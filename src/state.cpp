@@ -21,3 +21,5 @@ bool State::handle_input(nlohmann::json input) {
   }
   return true;
 }
+
+void State::new_method(struct map *method) { methods_vector.push_back(method); }

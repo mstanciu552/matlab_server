@@ -32,6 +32,7 @@ public:
     methods_vector = methods_vector;
   }
   bool handle_input(nlohmann::json);
+  void new_method(struct map *);
 };
 
 #endif
