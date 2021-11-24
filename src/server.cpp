@@ -14,6 +14,8 @@ void Server::did_open_cb(nlohmann::json json, State *state) {
     post_json(err->to());
   }
   // TODO Add to global state
+  state->add_textDocument(json["params"]["textDocument"]["uri"],
+                          json["params"]["textDocument"]);
 }
 
 void Server::init_methods() {

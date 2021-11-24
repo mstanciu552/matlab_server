@@ -23,3 +23,7 @@ bool State::handle_input(nlohmann::json input) {
 }
 
 void State::new_method(struct map *method) { methods_vector.push_back(method); }
+
+void State::add_textDocument(std::string name, nlohmann::json textDocument) {
+  this->textDocument.push_back(new struct textDocumentItem(name, textDocument));
+}

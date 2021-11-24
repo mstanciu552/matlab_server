@@ -6,14 +6,16 @@
 #include <functional>
 #include <iostream>
 
-struct textDocument {
+struct textDocumentItem {
   std::string uri;
-  std::string textDocument;
+  nlohmann::json textDocument;
+  textDocumentItem(std::string uri, nlohmann::json textDocument)
+      : uri(uri), textDocument(textDocument) {}
 };
 
 class State {
 private:
-  struct textDocument textDocument;
+  std::vector<struct textDocumentItem *> textDocument;
   std::vector<struct map *> methods_vector;
 
 public:
@@ -25,6 +27,7 @@ public:
   }
   bool handle_input(nlohmann::json);
   void new_method(struct map *);
+  void add_textDocument(std::string, nlohmann::json);
 };
 
 struct map {
