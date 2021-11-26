@@ -1,5 +1,5 @@
 CC = g++
-FLAGS = -Wall -Wextra -ggdb
+FLAGS = -Wall -Wextra -ggdb -llua -L./lua -I./lua -ldl
 MAIN = main.cpp
 SRC = $(wildcard src/*.cpp)
 HEADERS = $(wildcard src/*.hpp)

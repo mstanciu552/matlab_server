@@ -6,6 +6,7 @@
 
 int main() {
   Server *server = new Server();
+  exec_lua();
   server->get_state()->loop();
 
   return 0;
