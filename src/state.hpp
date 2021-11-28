@@ -2,6 +2,7 @@
 #define STATE_H_
 
 #include "../lib/json.hpp"
+#include "error.hpp"
 #include "utils.hpp"
 #include <functional>
 #include <iostream>
