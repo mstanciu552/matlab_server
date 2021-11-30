@@ -5,6 +5,7 @@
 int main() {
   Server *server = new Server();
   server->get_state()->loop();
+  server->get_state()->get_state();
 
   return 0;
 }

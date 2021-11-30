@@ -3,32 +3,28 @@ FLAGS = -Wall -Wextra -ggdb -llua -L./lua -I./lua -ldl
 MAIN = main.cpp
 SRC = $(wildcard src/*.cpp)
 HEADERS = $(wildcard src/*.hpp)
-OBJ = $(filter-out obj/json.o, $(wildcard obj/*.o))
+# OBJ = $(wildcard obj/*.o)
+OBJ = $(SRC:.cpp=.o)
 
 # TODO Separate compilation and linking of libs
 
-all: build run
+.PHONY: all build clean
 
-# build: rpc.o main.o link
-build: $(MAIN) $(SRC) $(HEADERS)
-	$(CC) $(FLAGS) $< $(SRC) -o build/main
+all: build run clean
+
+build: rpc.o utils.o error.o state.o methods.o server.o main.o link
 
 %.o: src/%.cpp src/%.hpp
-	$(CC) $(FLAGS) -o ./obj/$@ -c $<
-
-%.o: lib/%.hpp
-	$(CC) $(FLAGS) -o ./obj/$@ -c $<
-
-%.o: %.cpp
-	$(CC) $(FLAGS) -o ./obj/$@ -c $<
+	$(CC) $(FLAGS) -c $<
 
 link: $(OBJ)
-	$(CC) -o build/main $^ -lc
+	$(CC) $(FLAGS) -o build/main main.o $^ -lc
 
 run: build/main
 	build/main
 
 clean:
-	rm build/main
+	rm -rf build/main
+	rm -rf *.o
+	rm -rf src/*.o
 
-.PHONY: clean

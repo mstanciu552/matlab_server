@@ -13,7 +13,6 @@ void Server::did_open_cb(nlohmann::json json, State *state) {
     err = new Error(json["id"], ErrorCode::Invalid_Params);
     post_json(err->to());
   }
-  // TODO Add to global state
   state->add_textDocument(json["params"]["textDocument"]["uri"],
                           json["params"]["textDocument"]);
 }

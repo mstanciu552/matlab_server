@@ -29,3 +29,10 @@ void State::new_method(struct map *method) { methods_vector.push_back(method); }
 void State::add_textDocument(std::string name, nlohmann::json textDocument) {
   this->textDocument.push_back(new struct textDocumentItem(name, textDocument));
 }
+
+nlohmann::json State::get_state() {
+  nlohmann::json json;
+  json["textDocument"] = {this->textDocument[0]->textDocument,
+                          this->textDocument[0]->uri};
+  return json;
+}
