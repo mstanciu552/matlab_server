@@ -3,16 +3,13 @@ FLAGS = -Wall -Wextra -ggdb -llua -L./lua -I./lua -ldl
 MAIN = main.cpp
 SRC = $(wildcard src/*.cpp)
 HEADERS = $(wildcard src/*.hpp)
-# OBJ = $(wildcard obj/*.o)
 OBJ = $(SRC:.cpp=.o)
-
-# TODO Separate compilation and linking of libs
 
 .PHONY: all build clean
 
 all: build run clean
 
-build: rpc.o utils.o error.o state.o methods.o server.o main.o link
+build: main.o link
 
 %.o: src/%.cpp src/%.hpp
 	$(CC) $(FLAGS) -c $<
