@@ -5,7 +5,7 @@
 int main() {
   Server *server = new Server();
   server->get_state()->loop();
-  server->get_state()->get_state();
+  std::cout << server->get_state()->get_state() << std::endl;
 
   return 0;
 }

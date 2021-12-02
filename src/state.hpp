@@ -24,7 +24,7 @@ public:
   void loop();
   auto get_methods() { return methods_vector; }
   void set_methods(std::vector<struct map *> methods_vector) {
-    methods_vector = methods_vector;
+    this->methods_vector = methods_vector;
   }
   bool handle_input(nlohmann::json);
   void new_method(struct map *);

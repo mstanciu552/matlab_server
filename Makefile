@@ -7,7 +7,7 @@ OBJ = $(SRC:.cpp=.o)
 
 .PHONY: all build clean
 
-all: build run clean
+all: build run
 
 build: main.o link
 
@@ -24,4 +24,11 @@ clean:
 	rm -rf build/main
 	rm -rf *.o
 	rm -rf src/*.o
+
+# Test part
+
+test_%: tests/%.json
+	make build
+	clear
+	build/main < $<
 

@@ -6,6 +6,7 @@ void State::loop() {
   bool running = true;
   while (running) {
     handle_input(get_json());
+    break;
   }
 }
 
