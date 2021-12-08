@@ -29,6 +29,8 @@ public:
   bool handle_input(nlohmann::json);
   void new_method(struct map *);
   void add_textDocument(std::string, nlohmann::json);
+  void remove_textDocument(std::string);
+  struct textDocumentItem *get_textDocument(std::string);
   nlohmann::json get_state();
 };
 

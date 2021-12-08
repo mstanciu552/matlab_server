@@ -5,10 +5,9 @@ This is a simple language server for the Matlab language. The main editor this i
 # TODO List
 
 - [x] Basic RPC
-- [ ] Basic textDocument methods
+- [x] Basic textDocument methods
   - [x] didOpen
-  - [ ] didChange
-  - [ ] didClose
-  - [ ] didSave
-- [ ] Basic definition handling
+  - [x] didChange
+  - [x] didClose
 - [ ] Basic formatting method
+- [ ] Basic definition handling

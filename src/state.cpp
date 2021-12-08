@@ -31,9 +31,25 @@ void State::add_textDocument(std::string name, nlohmann::json textDocument) {
   this->textDocument.push_back(new struct textDocumentItem(name, textDocument));
 }
 
+void State::remove_textDocument(std::string name) {
+  for (auto el : this->textDocument)
+    if (el->uri == name) {
+      auto status =
+          remove(this->textDocument.begin(), this->textDocument.end(), el);
+      break;
+    }
+}
+
 nlohmann::json State::get_state() {
   nlohmann::json json;
   json["textDocument"] = {this->textDocument[0]->textDocument,
                           this->textDocument[0]->uri};
   return json;
+}
+
+struct textDocumentItem *State::get_textDocument(std::string uri) {
+  for (auto el : this->textDocument)
+    if (el->uri == uri)
+      return el;
+  return nullptr;
 }

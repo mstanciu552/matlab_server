@@ -16,7 +16,7 @@ M.setup = function(opts)
 			root_dir = function(fname)
 				return util.path.dirname(fname)
 			end,
-			cmd = { "nvim", "--headless", "-c", "'lua require('lsp_matlab').start()'" },
+			cmd = { "matlab_lsp" },
 			settings = {},
 		},
 		docs = {
